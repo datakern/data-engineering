@@ -1,0 +1,17 @@
+DataKern Company Profile
+
+DataKern was founded in 2024 to revolutionize data engineering education.
+It started as a small community project but quickly grew into a platform serving thousands.
+The primary focus is on hands-on, practical learning rather than just theory.
+
+Our flagship course is the AI Engineering Masterclass, which teaches students how to 
+build LLM agents, deploy RAG pipelines, and master tools like LangChain and FastAPI.
+This course is primarily taught by Uma Kiran Ramadugu, a Data & AI Architect.
+
+DataKern also offers a Data Engineering track covering Azure, PySpark, and Databricks.
+Our infrastructure runs heavily on cloud-native technologies and serverless architecture,
+allowing us to scale our learning platform globally with minimal downtime.
+
+In 2025, DataKern expanded its offerings to include live cohort-based bootcamps. 
+These bootcamps run for 8 weeks and guarantee a portfolio-ready project upon completion.
+We partnered with several top-tier tech companies to ensure our curriculum aligns with industry standards.
