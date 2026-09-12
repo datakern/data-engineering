@@ -21,16 +21,30 @@ class ServerConfig:
     def __init__(self, port):
         # 2. Assign to self.port (this will trigger the setter!)
         # YOUR CODE HERE
-        pass
+        self.port = port
+        
     
     # 3. Create the @property getter here
     # YOUR CODE HERE
+    @property
+    def port(self):
+        return self._port
 
     # 4, 5. Create the @port.setter here with validation logic
     # YOUR CODE HERE
+    @port.setter
+    def port(self, value):
+        if not isinstance(value, int):
+            raise TypeError("Port must be an integer")
+        if not (1 <= value <= 65535):
+            raise ValueError("Invalid Port")
+        self._port = value
 
 
 if __name__ == "__main__":
     # 6. Test the validation by providing an invalid port (e.g. 80000)
     # YOUR CODE HERE
-    pass
+    try:
+        config = ServerConfig(80000)
+    except ValueError as e:
+        print(e)
