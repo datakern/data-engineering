@@ -17,5 +17,5 @@ class DatabaseConnection:
 
 # 2. Create the object here
 if __name__ == "__main__":
-    # YOUR CODE HERE
-    pass
+    db=DatabaseConnection()
+    print(db)
