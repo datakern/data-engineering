@@ -20,9 +20,13 @@ class DatabaseConnection:
 
     # 1, 2, 3. Define the connect method here
     # YOUR CODE HERE
+    def connect(self):
+        print(f"Connecting to {self.host} with username: {self.username}")
     pass
 
 if __name__ == "__main__":
     # 4. Create object and call the method here
     # YOUR CODE HERE
+    my_db=DatabaseConnection("localhost:5432","kiranmayi","12345")
+    my_db.connect()
     pass

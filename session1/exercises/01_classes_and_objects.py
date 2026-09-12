@@ -16,6 +16,6 @@ class DatabaseConnection:
     pass
 
 # 2. Create the object here
-if __name__ == "__main__":
-    db=DatabaseConnection()
-    print(db)
+if __name__=="__main__":
+    my_db=DatabaseConnection()
+    print(my_db)
