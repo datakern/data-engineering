@@ -12,10 +12,9 @@ Instructions:
 
 # 1. Define the class here
 class DatabaseConnection:
-    # YOUR CODE HERE
     pass
 
 # 2. Create the object here
 if __name__ == "__main__":
-    # YOUR CODE HERE
-    pass
+    my_db = DatabaseConnection()
+    print(my_db)
