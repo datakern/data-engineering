@@ -19,18 +19,31 @@ Instructions:
 
 class ServerConfig:
     def __init__(self, port):
-        # 2. Assign to self.port (this will trigger the setter!)
-        # YOUR CODE HERE
-        pass
+        # This assignment automatically calls the setter method below!
+        self.port = port
     
-    # 3. Create the @property getter here
-    # YOUR CODE HERE
+    @property
+    def port(self):
+        return self._port
 
-    # 4, 5. Create the @port.setter here with validation logic
-    # YOUR CODE HERE
-
+    @port.setter
+    def port(self, value):
+        # The Bouncer: Validates data BEFORE letting it in
+        if not isinstance(value, int):
+            raise ValueError("Port must be an integer.")
+        if value < 1 or value > 65535:
+            raise ValueError(f"CRITICAL ERROR: Invalid port {value}. Must be between 1 and 65535.")
+        
+        # If valid, save it to the private variable
+        self._port = value
 
 if __name__ == "__main__":
-    # 6. Test the validation by providing an invalid port (e.g. 80000)
-    # YOUR CODE HERE
-    pass
+    # This works perfectly:
+    good_server = ServerConfig(5432)
+    print(f"Server created successfully on port {good_server.port}")
+
+    # This will crash the program (which is what we want! No bad data allowed)
+    try:
+        bad_server = ServerConfig(99999)
+    except ValueError as e:
+        print(f"Pipeline stopped because: {e}")

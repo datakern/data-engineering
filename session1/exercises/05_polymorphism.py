@@ -15,16 +15,26 @@ Instructions:
    Notice how the correct specific method is called even though they are in the same list!
 """
 
-# 1. Define base class DatabaseConnection
-# YOUR CODE HERE
 
-# 2, 3. Define PostgresConnection and MongoConnection here
-# YOUR CODE HERE
+class DatabaseConnection:
+    def connect(self):
+        print("Connecting to generic database...")
+
+class PostgresConnection(DatabaseConnection):
+    def connect(self):
+        print("Connecting to Postgres database (Relational)...")
+
+class MongoConnection(DatabaseConnection):
+    def connect(self):
+        print("Connecting to Mongo database (NoSQL)...")
 
 if __name__ == "__main__":
-    # 4. Create objects and put them in a list
-    # YOUR CODE HERE
+    pg_db = PostgresConnection()
+    mongo_db = MongoConnection()
     
-    # 5. Loop through the list and call connect() on each
-    # YOUR CODE HERE
-    pass
+    # We can treat them the same way in a loop!
+    connections = [pg_db, mongo_db]
+    
+    for db in connections:
+        # Polymorphism in action: Python knows which 'connect' to call
+        db.connect()

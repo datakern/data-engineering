@@ -23,10 +23,22 @@ class DatabaseConnection:
     def connect(self):
         print(f"Connecting to {self.host} with username: {self.username}")
 
+class PostgresConnection(DatabaseConnection):
+    def __init__(self, host, username, password, database_name):
+        super().__init__(host, username, password)
+        self.database_name = database_name
+
+    def connect(self):
+        print(f"Connecting to POSTGRES database '{self.database_name}' at {self.host}")
+
 # 1. Define PostgresConnection class here inheriting from DatabaseConnection
 # YOUR CODE HERE
 
 if __name__ == "__main__":
-    # 6. Test the new child class here
+    generic_db = DatabaseConnection("localhost:3306", "root", "1234")
+    generic_db.connect()
+
+    pg_db = PostgresConnection("localhost:5432", "admin", "secret_pass", "sales_db")
+    pg_db.connect()# 6. Test the new child class here
     # YOUR CODE HERE
-    pass
+    
