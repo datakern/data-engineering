@@ -13,14 +13,16 @@ Instructions:
 """
 
 class DatabaseConnection:
-    # 1, 2, 3. Define the constructor and attributes here
-    # YOUR CODE HERE
-    pass
+    def __init__(self, host, username, password):
+        self.host = host
+        self.username = username
+        self.password = password
 
 if __name__ == "__main__":
     # 4. Create the object with credentials here
     # YOUR CODE HERE
+    my_db = DatabaseConnection("local", "sai", "password123")
     
     # 5. Print the host attribute here
     # YOUR CODE HERE
-    pass
+    print(my_db.host)
