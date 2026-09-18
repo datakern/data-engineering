@@ -111,7 +111,7 @@ After completing each exercise, commit your progress:
 git status
 
 # Stage your exercise files
-git add data_engineering_regular_sessions/session_2/exercises/
+git add session_2/exercises/
 
 # Commit with a clear message
 git commit -m "session-2: complete exercise 01 - Product class"
@@ -163,8 +163,8 @@ git checkout main && git pull origin main
 git checkout -b session-2/firstname-lastname
 python3 -m venv .venv && source .venv/bin/activate
 pip install pandas
-# ... solve exercises inside data_engineering_regular_sessions/session_2/exercises/ ...
-git add data_engineering_regular_sessions/session_2/exercises/
+# ... solve exercises inside session_2/exercises/ ...
+git add session_2/exercises/
 git commit -m "session-2: all exercises complete"
 git push origin session-2/firstname-lastname
 # then open GitHub → raise PR to main on mindednet/datakern
