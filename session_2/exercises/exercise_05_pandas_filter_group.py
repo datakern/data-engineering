@@ -38,7 +38,7 @@ import os
 # ── Data — do NOT change ──────────────────────────────────────────────────────
 
 # Load the 25,000 row dataset
-DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "orders_25k.csv")
+DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "orders_75k.csv")
 df = pd.read_csv(DATA_FILE)
 df["revenue"] = df["quantity"] * df["unit_price"]   # already done for you ✅
 
