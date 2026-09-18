@@ -35,22 +35,13 @@ Complete each task. Print the result to see what you get.
 """
 
 import pandas as pd
-import io
+import os
 
 # ── Data — do NOT change ──────────────────────────────────────────────────────
 
-RAW_CSV = """order_id,customer_type,product,quantity,unit_price
-ORD001,Regular,Laptop,1,999.99
-ORD002,Premium,Mouse,3,29.99
-ORD003,Corporate,Keyboard,10,49.99
-ORD004,Regular,Monitor,2,299.99
-ORD005,Premium,Laptop,1,999.99
-ORD006,Corporate,Mouse,5,29.99
-ORD007,Regular,Keyboard,2,49.99
-ORD008,Premium,Monitor,1,299.99
-"""
-
-df = pd.read_csv(io.StringIO(RAW_CSV))
+# Load the 25,000 row dataset
+DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "orders_25k.csv")
+df = pd.read_csv(DATA_FILE)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task A — Preview the data
