@@ -61,9 +61,15 @@ class Product:
 
 # ── Write your code here ──────────────────────────────────────────────────────
 
-class OrderItem:
-    pass  # replace this
 
+class OrderItem:
+    def __init__(self, product, quantity):
+        self.product = product # replace this
+        self.quantity = quantity
+    def line_total(self):
+        return self.product.price * self.quantity
+    def __repr__(self):
+        return f"OrderItem({self.product.name} x{self.quantity} = €{self.line_total():.2f})"
 
 # ── Test it — do not change anything below this line ─────────────────────────
 
