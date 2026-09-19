@@ -60,15 +60,16 @@ class Order:
 # ── Write your code here ──────────────────────────────────────────────────────
 
 class Customer:
-    pass
-
+    def __init__(self, name):
+        self.name=name
+    def get_discount(self):
+        return 0.0
 class PremiumCustomer(Customer):
-    pass
-
+    def get_discount(self):
+        return 0.10
 class CorporateCustomer(Customer):
-    pass
-
-
+    def get_discount(self):
+        return 0.20
 # ── Test it — do not change anything below this line ─────────────────────────
 
 if __name__ == "__main__":
