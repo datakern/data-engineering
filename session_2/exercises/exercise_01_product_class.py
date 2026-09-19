@@ -51,8 +51,18 @@ Expected output when you run this file
 # ── Write your code here ──────────────────────────────────────────────────────
 
 class Product:
-    pass  # replace this
-
+    def __init__(self, name, price, stock): # replace this
+        self.name=name
+        self.price=price
+        self.__stock=stock
+    def get_stock(self):
+        return self.__stock
+    def reduce_stock(self, quantity):
+        if quantity<0:
+            raise ValueError("Quantity cannot be negative.")
+        if quantity>self.__stock:
+            raise ValueError(f"Not enough stock. Available: {self.__stock}")
+        self.__stock -= quantity
 
 # ── Test it — do not change anything below this line ─────────────────────────
 
