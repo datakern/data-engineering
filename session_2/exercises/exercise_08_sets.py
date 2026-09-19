@@ -151,3 +151,8 @@ Using sets, find:
 """
 
 # Your bonus code here:
+visited_page_a = {"C001", "C002", "C003", "C002", "C004"}
+visited_page_b = {"C003", "C004", "C005", "C001"}
+print(visited_page_a.union(visited_page_b))
+print(visited_page_a.intersection(visited_page_b))
+print(visited_page_a.difference(visited_page_b))
