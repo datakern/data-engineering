@@ -125,3 +125,10 @@ Hint: Look up the .sort() method!
 """
 
 # Your bonus code here:
+products=["Laptop", "Mouse", "Monitor", "Keyboard", "Mouse", "Desk"]
+print(products[-3:])
+print(products.count("Mouse"))
+products.sort()
+print(products)
+products.remove("Mouse")
+print(products)
