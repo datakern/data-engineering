@@ -125,3 +125,15 @@ Hint: Look up the .sort() method!
 """
 
 # Your bonus code here:
+products = ["Laptop", "Mouse", "Monitor", "Keyboard", "Mouse", "Desk"]
+for product in products[-3:]:
+    print(product)
+
+product_count = products.count("Mouse")
+print(f"Mouse appears {product_count} times.")    
+
+products.sort()
+print("Sorted list:", products)
+
+products.remove("Mouse")
+print("Final list:", products)      
