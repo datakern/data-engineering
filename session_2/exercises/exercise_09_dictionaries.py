@@ -188,3 +188,26 @@ Start with this list of orders:
 """
 
 # Your bonus code here:
+orders = [
+        {"order_id": "ORD001", "product": "Laptop",   "quantity": 2, "price": 999.99},
+        {"order_id": "ORD002", "product": "Mouse",    "quantity": 5, "price": 29.99},
+        {"order_id": "ORD003", "product": "Monitor",  "quantity": 1, "price": 299.99},
+        {"order_id": "ORD004", "product": "Keyboard", "quantity": 3, "price": 49.99},
+    ]
+for order in orders:
+    total=order["quantity"]*order["price"]
+    print(order["order_id"],"Total:",total)
+highest_total=0
+for order in orders:
+    total=order["quantity"]*order["price"]
+    if total>highest_total:
+        highest_total=total
+        highest_order_id=order["order_id"]
+print("Highest total order:",highest_order_id)
+print("Highest total:",highest_total)
+for order in orders:
+    total=order["quantity"]*order["price"]
+    order["total"]=total
+print("Final orders:")
+for order in orders:
+    print(order)
