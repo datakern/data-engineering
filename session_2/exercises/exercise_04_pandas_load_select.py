@@ -50,8 +50,7 @@ df = pd.read_csv(DATA_FILE)
 # ─────────────────────────────────────────────────────────────────────────────
 print("Task A:")
 # YOUR CODE HERE
-
-
+print(df.head(3))
 # ─────────────────────────────────────────────────────────────────────────────
 # Task B — Understand the structure
 #   Print the column names, their types, and non-null counts.
@@ -59,7 +58,7 @@ print("Task A:")
 # ─────────────────────────────────────────────────────────────────────────────
 print("\nTask B:")
 # YOUR CODE HERE
-
+df.info()
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task C — Extract one column
@@ -69,7 +68,8 @@ print("\nTask B:")
 # ─────────────────────────────────────────────────────────────────────────────
 print("\nTask C:")
 # YOUR CODE HERE
-
+product_column=df["product"]
+print(type(product_column))
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task D — Row by label (loc)
@@ -78,6 +78,10 @@ print("\nTask C:")
 # ─────────────────────────────────────────────────────────────────────────────
 print("\nTask D:")
 # YOUR CODE HERE
+row = df.loc[2]
+print(row)
+print("Product:", row["product"])
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -87,6 +91,9 @@ print("\nTask D:")
 # ─────────────────────────────────────────────────────────────────────────────
 print("\nTask E:")
 # YOUR CODE HERE
+row = df.iloc[4]
+print(row)
+print("Customer Type:", row["customer_type"])
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -96,3 +103,5 @@ print("\nTask E:")
 # ─────────────────────────────────────────────────────────────────────────────
 print("\nTask F:")
 # YOUR CODE HERE
+selected_columns = df[["product", "unit_price"]]
+print(selected_columns)

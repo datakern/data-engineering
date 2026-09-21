@@ -50,7 +50,7 @@ df["revenue"] = df["quantity"] * df["unit_price"]   # already done for you ✅
 # ─────────────────────────────────────────────────────────────────────────────
 print("Task A — Orders over €100:")
 # YOUR CODE HERE
-
+print(df[df["unit_price"]>100])
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task B — Filter by customer type
@@ -59,7 +59,7 @@ print("Task A — Orders over €100:")
 # ─────────────────────────────────────────────────────────────────────────────
 print("\nTask B — Premium customers only:")
 # YOUR CODE HERE
-
+print(df[df["customer_type"] == "Premium"])
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task C — Combine two filters
@@ -69,7 +69,7 @@ print("\nTask B — Premium customers only:")
 # ─────────────────────────────────────────────────────────────────────────────
 print("\nTask C — Price > 50 AND not Regular:")
 # YOUR CODE HERE
-
+print(df[(df["unit_price"]>50) & (df["customer_type"] != "Regular")])
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task D — Total revenue per customer type  (groupby + sum)
@@ -81,7 +81,7 @@ print("\nTask C — Price > 50 AND not Regular:")
 # ─────────────────────────────────────────────────────────────────────────────
 print("\nTask D — Total revenue by customer type:")
 # YOUR CODE HERE
-
+print(df.groupby("customer_type")["revenue"].sum())
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task E — Average price per product  (groupby + mean)
@@ -89,3 +89,4 @@ print("\nTask D — Total revenue by customer type:")
 # ─────────────────────────────────────────────────────────────────────────────
 print("\nTask E — Average unit price by product:")
 # YOUR CODE HERE
+print(df.groupby("product")["unit_price"].mean())

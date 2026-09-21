@@ -59,7 +59,7 @@ print()
 # ─────────────────────────────────────────────────────────────────────────────
 print("Task A — NaN count per column:")
 # YOUR CODE HERE
-
+print(df.isnull().sum())
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task B — Fill missing customer_type
@@ -67,7 +67,7 @@ print("Task A — NaN count per column:")
 #   Hint: fillna("Unknown")
 # ─────────────────────────────────────────────────────────────────────────────
 # YOUR CODE HERE
-
+df["customer_type"]=df["customer_type"].fillna("Unknown")
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task C — Fill missing unit_price
@@ -75,7 +75,7 @@ print("Task A — NaN count per column:")
 #   Hint: df["unit_price"].mean() gives you the average
 # ─────────────────────────────────────────────────────────────────────────────
 # YOUR CODE HERE
-
+df["unit_price"]=df["unit_price"].fillna(df["unit_price"].mean())
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task D — Drop what's still broken
@@ -83,7 +83,7 @@ print("Task A — NaN count per column:")
 #   Drop any row that still contains a NaN.
 # ─────────────────────────────────────────────────────────────────────────────
 # YOUR CODE HERE
-
+df=df.dropna()
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task E — Inspect the clean result
@@ -92,7 +92,8 @@ print("Task A — NaN count per column:")
 # ─────────────────────────────────────────────────────────────────────────────
 print("\nTask E — Clean data (first 15 rows):")
 # YOUR CODE HERE
-
+print(df.head(15))
+print("Rows survived:", len(df))
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Task F — Save to file
@@ -101,3 +102,4 @@ print("\nTask E — Clean data (first 15 rows):")
 # ─────────────────────────────────────────────────────────────────────────────
 # YOUR CODE HERE
 print("\nDone! Check for clean_orders.csv in your folder.")
+df.to_csv("clean_orders.csv", index=False)
