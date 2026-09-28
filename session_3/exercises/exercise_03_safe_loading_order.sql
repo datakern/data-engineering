@@ -23,17 +23,17 @@
 --
 -- In what exact order MUST you load these 5 tables? Fill in below:
 --
--- Step 1 (Parent): _________________________
--- Step 2 (Parent): _________________________
--- Step 3 (Child) : _________________________
--- Step 4 (Child) : _________________________
--- Step 5 (Child) : _________________________
+-- Step 1 (Parent):silver.customers
+-- Step 2 (Parent):silver.products
+-- Step 3 (Child) :silver.orders
+-- Step 4 (Child) :silver.order_items
+-- Step 5 (Child) :silver.order_reviews
 --
 -- Question: Could Step 1 and Step 2 be swapped? Why or why not?
 -- Answer:
 -- -----------------------------------------------------------------------------
-
-
+yes,step 1 and step 2 could be swapped.
+customers and products are parent tables, so they do not depend on each other.
 -- -----------------------------------------------------------------------------
 -- TODO 2: The Foreign Key Bouncer (Live Test)
 --
@@ -60,7 +60,8 @@ INSERT INTO silver.orders (
 
 -- Question: What exact error does PostgreSQL throw when you run the query above?
 -- Answer: 
-
+-- ERROR: insert or update on table "orders" violates foreign key constraint "fk_orders_customer"
+-- DETAIL: Key (customer_id)=(cust_phantom_999) is not present in table "customers".
 
 -- -----------------------------------------------------------------------------
 -- TODO 3: Safe Transaction Pattern (BEGIN -> COMMIT / ROLLBACK)
@@ -75,7 +76,7 @@ INSERT INTO silver.orders (
 -- Step A: Start the transaction
 -- -> Write the keyword to start a transaction:
 
-
+BEGIN; -- starts the transaction.
 -- Step B: Insert the parent record
 INSERT INTO silver.customers (
     customer_id, 
@@ -109,6 +110,7 @@ INSERT INTO silver.orders (
 -- Step D: Make the changes permanent if no errors occurred
 -- -> Write the keyword to finalize and commit the transaction:
 
+COMMIT; -- saves all the changes permanently.
 
 
 -- -----------------------------------------------------------------------------
@@ -121,5 +123,5 @@ INSERT INTO silver.orders (
 -- 2. Why is this behavior essential for data pipeline reliability?
 -- -----------------------------------------------------------------------------
 -- Your Answer:
--- 1. 
--- 2. 
+-- 1. No, cust_valid_101 does not remain in silver.customers.ROLLBACK cancels all changes made after BEGIN
+-- 2. If one step fails, ROLLBACK cancels all the changes in that transaction. This keeps the database safe and consistent.
