@@ -24,13 +24,21 @@
 -- ORDER BY total_orders DESC;
 --
 -- 1. What is the bug? What is COUNT(*) actually counting here?
---    Answer: 
---
+-- Answer: silver.order_items has one row for each item.
+-- One order can have many items.
+-- So, after joining orders with order_items, one order can appear many times.
+-- COUNT(*) counts all item rows, not unique orders.
 -- 2. Rewrite the query below so that it correctly counts the number of DISTINCT
 --    orders per customer state:
 -- -----------------------------------------------------------------------------
-
+SELECT c.customer_state,
+COUNT(DISTINCT o.order_id) AS total_orders
+FROM silver.customers AS c
+JOIN silver.orders AS o 
+ON c.customer_id = o.customer_id
 -- -> Write your corrected query below:
+GROUP BY c.customer_state
+ORDER BY total_orders DESC;
 
 
 
@@ -53,13 +61,20 @@
 --
 -- 1. Explain WHY PostgreSQL throws this error by referencing the logical 
 --    execution order (FROM -> WHERE -> GROUP BY -> SELECT -> ORDER BY -> LIMIT):
---    Answer: 
+-- Answer:
+-- SQL does not run from top to bottom.
+-- FROM and WHERE run before SELECT.
+-- total_item_cost is created in SELECT.
+-- So, WHERE cannot use total_item_cost.
+-- That is why PostgreSQL gives this error.
 --
 -- 2. Rewrite the query below so that it executes without error:
 -- -----------------------------------------------------------------------------
 
 -- -> Write your corrected query below:
-
+SELECT order_id, order_item_id,(price + freight_value) AS total_item_cost
+FROM silver.order_items
+WHERE (price + freight_value) > 200.00;
 
 
 
@@ -76,7 +91,11 @@
 -- -----------------------------------------------------------------------------
 
 -- -> Write your query below:
-
+SELECT o.order_id, o.order_status, o.order_purchase_timestamp
+FROM silver.orders AS o
+LEFT JOIN silver.order_reviews AS r ON o.order_id = r.order_id
+WHERE r.review_id IS NULL ORDER BY o.order_purchase_timestamp DESC
+LIMIT 10;
 
 
 
@@ -98,5 +117,8 @@
 -- -----------------------------------------------------------------------------
 
 -- -> Write your Gold aggregation query below:
-
+SELECT p.product_category_name, COUNT(DISTINCT oi.order_id) AS order_count, ROUND(SUM(oi.price + oi.freight_value), 2) AS total_revenue
+FROM silver.order_items AS oi JOIN silver.products AS p ON oi.product_id = p.product_id
+WHERE p.product_category_name IS NOT NULL GROUP BY p.product_category_name
+ORDER BY total_revenue DESC LIMIT 10;
 

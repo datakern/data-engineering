@@ -20,9 +20,8 @@
 -- -----------------------------------------------------------------------------
 
 -- -> Write your query below:
-
-
-
+SELECT COUNT(*) AS total_rows  
+FROM silver.order_items;
 
 -- -----------------------------------------------------------------------------
 -- CHECK 2: Null Check on Critical Key Columns
@@ -34,7 +33,9 @@
 -- -----------------------------------------------------------------------------
 
 -- -> Write your query below:
-
+SELECT COUNT (*) AS total_null_keys
+FROM silver.order_items 
+WHERE order_id IS NULL OR order_item_id IS NULL;
 
 
 
@@ -48,8 +49,8 @@
 -- -----------------------------------------------------------------------------
 
 -- -> Write your query below:
-
-
+SELECT order_id, order_item_id, COUNT(*) AS duplicate_count 
+FROM silver.order_items GROUP BY order_id, order_item_id HAVING COUNT(*) >1;
 
 
 -- -----------------------------------------------------------------------------
@@ -65,8 +66,10 @@
 -- -----------------------------------------------------------------------------
 
 -- -> Write your query below:
-
-
+SELECT oi.order_id, oi.order_item_id, oi.product_id, oi.price
+FROM silver.order_items AS oi
+LEFT JOIN silver.orders AS o ON oi.order_id = o.order_id
+WHERE o.order_id IS NULL;
 
 
 -- -----------------------------------------------------------------------------
@@ -78,5 +81,11 @@
 -- -----------------------------------------------------------------------------
 
 -- -> Write your query below:
-
-
+SELECT 
+    oi.order_id,
+    oi.order_item_id,
+    oi.product_id
+FROM silver.order_items AS oi
+LEFT JOIN silver.products AS p 
+    ON oi.product_id = p.product_id
+WHERE p.product_id IS NULL;
