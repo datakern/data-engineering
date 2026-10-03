@@ -1,0 +1,14 @@
+# Generated output — do not commit
+output/
+
+# Virtual environment
+.venv/
+__pycache__/
+
+# macOS
+.DS_Store
+
+# Spark local metadata
+metastore_db/
+spark-warehouse/
+derby.log
