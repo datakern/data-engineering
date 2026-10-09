@@ -24,6 +24,14 @@ import time
 # Prevent macOS binding errors
 os.environ["SPARK_LOCAL_IP"] = "127.0.0.1"
 
+# Compatibility fix for newer Python runtimes (e.g., Python 3.14+):
+try:
+    import cloudpickle
+    import pyspark.serializers
+    pyspark.serializers.cloudpickle = cloudpickle
+except ImportError:
+    pass
+
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import (
@@ -127,6 +135,10 @@ elapsed_read = time.time() - t0
 
 print(f"✅ Fast single-pass read completed in {elapsed_read:.3f}s. Rows: {order_count:,}")
 print("   Schema is guaranteed: zero type surprises, zero schema drift.")
+print("\n   👀 OBSERVE IN SPARK UI (http://localhost:4040):")
+print("   - In the 'Jobs' tab: Notice that only 1 job ran for df_orders.count().")
+print("   - When inferSchema=True is used, Spark must launch extra preparatory jobs")
+print("     just to sample rows and guess data types before your real job even starts!")
 
 pause()
 
@@ -277,6 +289,16 @@ print("\n🔎 PHYSICAL PLAN INSPECTION:")
 print("Let's look at df_with_udf.explain():")
 print("Notice the 'BatchEvalPython' node — that represents the Python socket bottleneck.")
 df_with_udf.select("order_id", "price_tier").explain()
+
+print("\n👀 OBSERVE IN SPARK UI (http://localhost:4040):")
+print("1. Click on the 'SQL / DataFrame' tab:")
+print("   - Find the query for the Python UDF groupBy action:")
+print("     Notice the explicit 'BatchEvalPython' operator in the DAG diagram.")
+print("     This is where Spark serializes rows to an external Python process.")
+print("   - Find the query for the Native Spark groupBy action:")
+print("     Notice WholeStageCodegen (e.g., *(1) Project [CASE WHEN ...]) — zero Python bridge!")
+print("2. Click on the 'Stages' tab:")
+print("   - Compare the task execution duration between the UDF stage and the Native stage.")
 
 pause()
 

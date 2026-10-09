@@ -221,6 +221,14 @@ delta_table.history().select(
     "version", "timestamp", "userId", "operation", "operationMetrics.numOutputRows"
 ).show(truncate=False)
 
+print("\n👀 OBSERVE IN SPARK UI (http://localhost:4040):")
+print("1. Click on the 'SQL / DataFrame' tab:")
+print("   - Notice the query for 'df_historical' with option('versionAsOf', 0):")
+print("     Delta creates a scan plan reading ONLY the files valid at Version 0 snapshot!")
+print("2. Click on the 'Stages' tab:")
+print("   - Notice how Time Travel requires zero full-table backups or data copies;")
+print("     it is simply a metadata-driven file scan resolved from the _delta_log.")
+
 pause()
 
 # ─────────────────────────────────────────────────────────────────
@@ -307,6 +315,13 @@ df_gold_finance.write.format("delta").mode("overwrite").save(DELTA_GOLD)
 print("✅ Gold Finance Delta Table successfully created!")
 print("\nTop 5 Product Categories in Gold Table:")
 spark.read.format("delta").load(DELTA_GOLD).show(5, truncate=False)
+
+print("\n👀 OBSERVE IN SPARK UI (http://localhost:4040):")
+print("1. Click on the 'SQL / DataFrame' tab:")
+print("   - Notice the complete Medallion pipeline DAG for Gold creation:")
+print("     It joins Silver Delta orders with Broadcast(products), aggregates revenue,")
+print("     evaluates WindowExec for rank, and commits via Delta's transaction protocol!")
+print("2. Notice that the entire pipeline ran end-to-end with full schema enforcement and auditability.")
 
 pause()
 

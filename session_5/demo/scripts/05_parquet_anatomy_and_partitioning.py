@@ -234,10 +234,21 @@ df_delivered_part = spark.read.parquet(PARTITIONED_DIR) \
 print("Execution Plan for Partitioned Read:")
 df_delivered_part.explain(mode="formatted")
 
+part_count = df_delivered_part.count()
+print(f"✅ Filtered query completed. Delivered rows found: {part_count:,}")
+
 print("""
 🔎 NOTICE:
-In the Scan node, look at 'PartitionFilters: [isnotnull(order_status), (order_status = delivered)]'.
-Spark only reads the 'order_status=delivered/' folder!
+1. In the terminal explain plan:
+   Look at 'PartitionFilters: [isnotnull(order_status), (order_status = delivered)]'.
+   Spark only reads the 'order_status=delivered/' folder!
+
+2. 👀 OBSERVE IN SPARK UI (http://localhost:4040):
+   - Click on the 'SQL / DataFrame' tab.
+   - Click on the latest 'count' query at the bottom.
+   - Click on the 'Scan parquet' box at the bottom of the DAG:
+     Notice the 'PartitionFilters' metric and notice that 'number of files read'
+     only includes files from the 'order_status=delivered' folder — all other folders are skipped!
 
 ⚠️ THE GOLDILOCKS RULE OF PARTITIONING:
 1. GOOD PARTITION KEYS:
