@@ -1,0 +1,7 @@
+# Pinned to the combination these demos were tested with.
+# Java 17 or newer must be installed separately (see 00_setup_check.py).
+pyspark==4.2.0
+delta-spark==4.4.1
+pyarrow>=17
+pandas>=2.2,<3
+numpy>=1.26,<2.4
