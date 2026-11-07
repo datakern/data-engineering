@@ -1,0 +1,7 @@
+# Pinned to the combination this lab was tested with (same as the Session 6 and 7 demos).
+# Java 17 or newer must be installed separately.
+pyspark==4.2.0
+delta-spark==4.4.1
+pandas>=2.2,<3
+numpy>=1.26,<2.4
+ipykernel
