@@ -1,0 +1,48 @@
+# The job: download -> run the pipeline -> verify.
+#
+# There is no cluster section on purpose: with none given, the notebook tasks run on serverless compute.
+
+resources:
+  jobs:
+    quakes_job:
+      name: quakes-job
+
+      # Job parameters reach the notebooks as widgets with the same name.
+      # The values come from the target in databricks.yml, so dev and prod each get their own.
+      parameters:
+        - name: catalog
+          default: ${var.catalog}
+        - name: schema
+          default: ${var.schema}
+        - name: days_back
+          default: "30"
+
+      tasks:
+        - task_key: download_quakes
+          notebook_task:
+            notebook_path: ../src/01_download_quakes.py
+          # This task talks to the internet, so one retry is cheap insurance against a flaky connection.
+          max_retries: 1
+          min_retry_interval_millis: 60000
+
+        - task_key: run_pipeline
+          depends_on:
+            - task_key: download_quakes
+          pipeline_task:
+            # ${resources.pipelines.quakes_pipeline.id} is filled in with the real id at deploy time.
+            pipeline_id: ${resources.pipelines.quakes_pipeline.id}
+
+        - task_key: verify
+          depends_on:
+            - task_key: run_pipeline
+          notebook_task:
+            notebook_path: ../src/99_verify.py
+
+      # Every day at 06:00 UTC. Paused so the workshop does not leave something running.
+      # To switch it on: change PAUSED to UNPAUSED and deploy again.
+      schedule:
+        quartz_cron_expression: "0 0 6 * * ?"
+        timezone_id: UTC
+        pause_status: PAUSED
+
+      max_concurrent_runs: 1

@@ -1,0 +1,47 @@
+# The bundle: one file that says WHAT we deploy and WHERE.
+#
+#   what  = the pipeline and the job in resources/, plus the files in src/ they use
+#   where = the targets below: dev and prod
+#
+# Commands (run them in the folder that holds this file):
+#   databricks bundle validate -t dev            check the files
+#   databricks bundle deploy   -t dev            create or update the pipeline and job
+#   databricks bundle run quakes_job -t dev      start the job
+#   databricks bundle deploy   -t prod           same code, next environment
+#
+# The workspace is not written here: the CLI takes it from the login you made with
+# `databricks auth login`.
+
+bundle:
+  name: quakes
+
+include:
+  - resources/*.yml
+
+# Values that differ per environment. The code never contains them; it receives them as settings.
+variables:
+  catalog:
+    description: Unity Catalog catalog where you created your schemas
+  schema:
+    description: Schema of this environment, with a landing volume inside it
+
+targets:
+  # ---- dev: where you try changes -----------------------------------------------------------
+  dev:
+    mode: development # names get a [dev <you>] prefix and schedules are paused
+    default: true
+    variables:
+      catalog: <your_catalog> # <-- fill in
+      schema: <your_name>_dev # <-- fill in, the schema you created in the SQL editor
+
+  # ---- prod: the next environment -----------------------------------------------------------
+  # No `mode: production` here on purpose. That mode demands that the job runs as a service
+  # principal (a machine identity) and that permissions are listed, which a workshop does not have.
+  # A real prod target would add:  mode: production, run_as: <service principal>, permissions: [...]
+  # To use a second workspace, add under prod:
+  #   workspace:
+  #     host: https://<prod-workspace>.azuredatabricks.net
+  prod:
+    variables:
+      catalog: <your_catalog> # <-- fill in
+      schema: <your_name>_prod # <-- fill in, the schema you created in the SQL editor

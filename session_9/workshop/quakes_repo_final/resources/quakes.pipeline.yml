@@ -1,0 +1,23 @@
+# The pipeline: Bronze -> Silver -> Gold, written as three SQL files.
+# Every setting you would click in the pipeline page of the workspace is a line in this file.
+
+resources:
+  pipelines:
+    quakes_pipeline:
+      name: quakes-pipeline
+
+      # Where the tables are created.
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+
+      serverless: true
+
+      # The setting the Bronze file reads as ${quakes.landing_path}.
+      configuration:
+        quakes.landing_path: /Volumes/${var.catalog}/${var.schema}/landing/quakes
+
+      # The source code of the pipeline: every file in src/pipeline.
+      # The pipeline works out the order itself: Silver needs Bronze, Gold needs Silver.
+      libraries:
+        - glob:
+            include: ../src/pipeline/**

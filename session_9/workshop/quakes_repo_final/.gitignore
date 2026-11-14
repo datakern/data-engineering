@@ -1,0 +1,15 @@
+# Databricks bundle: the CLI keeps its working files here
+.databricks/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Never commit secrets or tokens
+.env
+*.pem
+
+# Editor and OS files
+.DS_Store
+.vscode/
